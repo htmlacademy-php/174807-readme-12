@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Pavel Klochkov](https://up.htmlacademy.ru/php/12/user/174807).
-* Наставник: `Неизвестно`.
+* Наставник: [Денис Ходаковский](https://htmlacademy.ru/profile/id1232355).
 
 ---
 
