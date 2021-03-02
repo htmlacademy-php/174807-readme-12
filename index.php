@@ -259,13 +259,10 @@ $userName = 'Павел';
                             <p><?= $post['description']; ?></p>
                         <?php elseif ($post['type'] === 'post-link'): ?>
                             <div class="post-link__wrapper">
-                                <a class="post-link__external"
-                                   href="http://"
-                                   title="Перейти по ссылке">
+                                <a class="post-link__external" href="http://" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
-                                            <img src="https://www.google.com/s2/favicons?domain=vitadental.ru"
-                                                 alt="Иконка">
+                                            <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                         </div>
                                         <div class="post-link__info">
                                             <h3><?= $post['title']; ?></h3>
@@ -277,18 +274,14 @@ $userName = 'Павел';
 
                         <?php elseif ($post['type'] === 'post-photo'): ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?= $post['description']; ?>" alt="Фото от пользователя" width="360"
-                                     height="240">
+                                <img src="img/<?= $post['description']; ?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
 
                         <?php elseif ($post['type'] === 'post-video'): ?>
                             <div class="post-video__block">
                                 <div class="post-video__preview">
                                     <?= embed_youtube_cover($post['description']); ?>
-                                    <img src="img/coast-medium.jpg"
-                                         alt="Превью к видео"
-                                         width="360"
-                                         height="188">
+                                    <img src="img/coast-medium.jpg"  alt="Превью к видео" width="360" height="188">
                                 </div>
                                 <a href="post-details.html" class="post-video__play-big button">
                                     <svg class="post-video__play-big-icon" width="14" height="14">
@@ -303,9 +296,7 @@ $userName = 'Павел';
                         <div class="post__author">
                             <a class="post__author-link" href="#" title="Автор">
                                 <div class="post__avatar-wrapper">
-                                    <img class="post__author-avatar"
-                                         src="img/<?= $post['avatar-url']; ?>"
-                                         alt="Аватар пользователя <?= $post['username']; ?>">
+                                    <img class="post__author-avatar" src="img/<?= $post['avatar-url']; ?>" alt="Аватар пользователя <?= $post['username']; ?>">
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['username']; ?></b>
