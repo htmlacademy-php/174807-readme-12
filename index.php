@@ -104,8 +104,7 @@ $userName = 'Павел';
                         <li class="header__profile">
                             <a class="header__profile-link" href="#">
                                 <div class="header__avatar-wrapper">
-                                    <img class="header__profile-avatar" src="img/userpic-medium.jpg"
-                                         alt="Аватар профиля">
+                                    <img class="header__profile-avatar" src="img/userpic-medium.jpg" alt="Аватар профиля">
                                 </div>
                                 <div class="header__profile-name">
                                     <span>
@@ -195,8 +194,7 @@ $userName = 'Павел';
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active"
-                           href="#">
+                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
                             <span>Все</span>
                         </a>
                     </li>
