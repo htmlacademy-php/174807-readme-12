@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'prepareExcerpt.php';
+
 $posts = [
     [
         'title' => 'Цитата',
@@ -42,6 +44,7 @@ $posts = [
 $isAuth = rand(0, 1);
 
 $userName = 'Павел';
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -256,7 +259,7 @@ $userName = 'Павел';
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
                         <?php elseif ($post['type'] === 'post-text'): ?>
-                            <p><?= $post['description']; ?></p>
+                            <p><?= prepareExcerpt($post['description']); ?></p>
                         <?php elseif ($post['type'] === 'post-link'): ?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="http://" title="Перейти по ссылке">
