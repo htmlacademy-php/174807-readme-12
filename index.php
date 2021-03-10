@@ -263,7 +263,7 @@ $maxTextLength = 300;
                         <?php if (mb_strlen($post['description']) <= $maxTextLength) { ?>
                             <p><?= $post['description']; ?></p>
                         <?php } else { ?>
-                            <p><?= trimText($post['description'], $maxTextLength); ?> ...</p>
+                            <p><?= trimText($post['description'], $maxTextLength) . '...'; ?></p>
                             <a class="post-text__more-link" href="#">Читать далее</a>
                         <?php }; ?>
                         <?php elseif ($post['type'] === 'post-link'): ?>
