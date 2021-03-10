@@ -25,5 +25,3 @@ function trimText(string $text, int $length = 300): string
 
     return implode(' ', $result);
 }
-
-
