@@ -14,14 +14,14 @@ function trimText(string $text, int $length = 300): string
     }
 
     $words = explode(' ', $text);
-    $result = [];
+    $resultText = '';
 
     foreach ($words as $word) {
-        if ((mb_strlen(implode(' ', $result)) + mb_strlen($word) + 1) > $length) {
+        if (mb_strlen($resultText . ' ' . $word) > $length) {
             break;
         }
-        $result[] = $word;
+        $resultText .= !$resultText ? $word : ' ' . $word;
     }
 
-    return implode(' ', $result);
+    return $resultText;
 }
