@@ -2,9 +2,9 @@
 declare(strict_types=1);
 
 /**
+ * Функция обрезает текст по заданной длине или возвращает исходный текст если он короче.
  * @param string $text
  * @param int    $length
- *
  * @return string
  */
 function trimText(string $text, int $length = 300): string
