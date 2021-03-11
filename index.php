@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+require_once dirname(__FILE__) . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'userFunctions.php';
+
 $posts = [
     [
         'title' => 'Цитата',
@@ -42,6 +44,8 @@ $posts = [
 $isAuth = rand(0, 1);
 
 $userName = 'Павел';
+$maxTextLength = 300;
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -256,7 +260,12 @@ $userName = 'Павел';
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
                         <?php elseif ($post['type'] === 'post-text'): ?>
+                        <?php if (mb_strlen($post['description']) <= $maxTextLength) { ?>
                             <p><?= $post['description']; ?></p>
+                        <?php } else { ?>
+                            <p><?= trimText($post['description'], $maxTextLength) . '...'; ?></p>
+                            <a class="post-text__more-link" href="#">Читать далее</a>
+                        <?php }; ?>
                         <?php elseif ($post['type'] === 'post-link'): ?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="http://" title="Перейти по ссылке">
