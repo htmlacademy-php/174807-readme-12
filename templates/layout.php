@@ -116,10 +116,7 @@ require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATO
     </div>
 </header>
 
-<?php print include_template( 'main.php', [
-    'posts' => $posts,
-    'maxTextLength' => $maxTextLength
-]); ?>
+<?= $content; ?>
 
 <footer class="footer">
     <div class="footer__wrapper">

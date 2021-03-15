@@ -44,11 +44,16 @@ $posts = [
 $isAuth = rand(0, 1);
 $userName = 'Павел';
 $maxTextLength = 300;
+$content = include_template( 'main.php', [
+    'posts' => $posts,
+    'maxTextLength' => $maxTextLength
+]);
 
 print include_template('layout.php', [
     'pageTitle' => $pageTitle,
     'isAuth' => $isAuth,
     'userName' => $userName,
     'maxTextLength' => $maxTextLength,
-    'posts' => $posts
+    'posts' => $posts,
+    'content' => $content
 ]);
