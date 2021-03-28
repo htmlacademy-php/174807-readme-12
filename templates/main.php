@@ -85,10 +85,13 @@
             </div>
         </div>
         <div class="popular__posts">
-            <?php foreach ($posts as $post):
+            <?php foreach ($posts as $index => $post):
                 $postTitle = htmlspecialchars($post['title']);
                 $postDescription = htmlspecialchars($post['description']);
-            ?>
+                $postDate = generate_random_date($index);
+                $dateTitle = date('d.m.Y H:i', strtotime($postDate));
+                $dateDifferenceText = getDateDifferenceText($postDate); ?>
+
                 <article class="popular__post post <?= $post['type']; ?>">
                     <header class="post__header">
                         <h2><a href="#"><?= $postTitle; ?></a></h2>
@@ -151,7 +154,11 @@
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['username']; ?></b>
-                                    <time class="post__time" datetime="">дата</time>
+                                    <time class="post__time"
+                                          datetime="<?= $postDate; ?>"
+                                          title="<?= $dateTitle; ?>">
+                                        <?= $dateDifferenceText ?>
+                                    </time>
                                 </div>
                             </a>
                         </div>
