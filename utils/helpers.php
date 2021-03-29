@@ -239,10 +239,10 @@ function extract_youtube_id($youtube_url)
 }
 
 /**
- * @param $index
+ * @param int $index
  * @return false|string
  */
-function generate_random_date($index)
+function generate_random_date(int $index): bool|string
 {
     $deltas = [['minutes' => 59], ['hours' => 23], ['days' => 6], ['weeks' => 4], ['months' => 11]];
     $dcnt = count($deltas);
