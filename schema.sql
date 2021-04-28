@@ -10,22 +10,21 @@ CREATE TABLE users
 (
     id                INT AUTO_INCREMENT PRIMARY KEY,
     registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    login             VARCHAR(128) NOT NULL UNIQUE,
-    email             VARCHAR(128) NOT NULL UNIQUE,
-    password          CHAR(64)     NOT NULL,
-    avatar            VARCHAR(128)
+    login             VARCHAR(127) NOT NULL UNIQUE,
+    email             VARCHAR(127) NOT NULL UNIQUE,
+    password          CHAR(60)     NOT NULL,
+    avatar            VARCHAR(127)
 );
 
 CREATE TABLE posts
 (
     id              INT AUTO_INCREMENT PRIMARY KEY,
     date            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    title           VARCHAR(128) NOT NULL,
+    title           VARCHAR(255) NOT NULL,
     content         TEXT,
-    author          VARCHAR(128) NOT NULL,
+    user_id         INT,
     views           INT,
-    content_type_id INT          NOT NULL,
-    tags            VARCHAR(128)
+    content_type_id INT          NOT NULL
 );
 
 CREATE TABLE comments
@@ -34,7 +33,7 @@ CREATE TABLE comments
     date    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     text    TEXT,
     user_id INT NOT NULL,
-    post_id INT
+    post_id INT NOT NULL
 );
 
 CREATE TABLE post_likes
@@ -60,16 +59,16 @@ CREATE TABLE messages
     recipient_id INT  NOT NULL
 );
 
-CREATE TABLE tags
+CREATE TABLE hash_tags
 (
     id      INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT         NOT NULL,
-    hashtag VARCHAR(32) NOT NULL UNIQUE
+    hashtag VARCHAR(31) NOT NULL
 );
 
 CREATE TABLE content_type
 (
     id   INT AUTO_INCREMENT PRIMARY KEY,
-    type VARCHAR(32) NOT NULL UNIQUE,
-    icon VARCHAR(32)
+    type VARCHAR(15) NOT NULL UNIQUE,
+    icon VARCHAR(15) NOT NULL
 );
