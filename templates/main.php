@@ -41,77 +41,50 @@
                             <span>Все</span>
                         </a>
                     </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--photo button" href="#">
-                            <span class="visually-hidden">Фото</span>
-                            <svg class="filters__icon" width="22" height="18">
-                                <use xlink:href="#icon-filter-photo"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--video button" href="#">
-                            <span class="visually-hidden">Видео</span>
-                            <svg class="filters__icon" width="24" height="16">
-                                <use xlink:href="#icon-filter-video"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--text button" href="#">
-                            <span class="visually-hidden">Текст</span>
-                            <svg class="filters__icon" width="20" height="21">
-                                <use xlink:href="#icon-filter-text"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--quote button" href="#">
-                            <span class="visually-hidden">Цитата</span>
-                            <svg class="filters__icon" width="21" height="20">
-                                <use xlink:href="#icon-filter-quote"></use>
-                            </svg>
-                        </a>
-                    </li>
-                    <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--link button" href="#">
-                            <span class="visually-hidden">Ссылка</span>
-                            <svg class="filters__icon" width="21" height="18">
-                                <use xlink:href="#icon-filter-link"></use>
-                            </svg>
-                        </a>
-                    </li>
+                    <?php foreach ($categories as $category):
+                        $icon = $category['icon'];
+                        $type = $category['type'];
+                    ?>
+                        <li class="popular__filters-item filters__item">
+                            <a class="filters__button filters__button--<?= $icon;?> button" href="#">
+                                <span class="visually-hidden"><?= $type ;?></span>
+                                <svg class="filters__icon" width="22" height="18">
+                                    <use xlink:href="#icon-filter-<?= $icon;?>"></use>
+                                </svg>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
         <div class="popular__posts">
             <?php foreach ($posts as $index => $post):
                 $postTitle = htmlspecialchars($post['title']);
-                $postDescription = htmlspecialchars($post['description']);
+                $postContent = htmlspecialchars($post['content']);
                 $postDate = generate_random_date($index);
                 $dateTitle = date('d.m.Y H:i', strtotime($postDate));
                 $dateDifferenceText = getDateDifferenceText($postDate); ?>
 
-                <article class="popular__post post <?= $post['type']; ?>">
+                <article class="popular__post post post-<?= $post['icon']; ?>">
                     <header class="post__header">
                         <h2><a href="#"><?= $postTitle; ?></a></h2>
                     </header>
                     <div class="post__main">
-                        <?php if ($post['type'] === 'post-quote'): ?>
+                        <?php if ($post['type'] === 'Цитата'): ?>
                             <blockquote>
                                 <p>
-                                    <?= $postDescription; ?>
+                                    <?= $postContent; ?>
                                 </p>
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
-                        <?php elseif ($post['type'] === 'post-text'): ?>
-                            <?php if (mb_strlen($post['description']) <= $maxTextLength) { ?>
-                                <p><?= $postDescription; ?></p>
+                        <?php elseif ($post['type'] === 'Текст'): ?>
+                            <?php if (mb_strlen($post['content']) <= $maxTextLength) { ?>
+                                <p><?= $postContent; ?></p>
                             <?php } else { ?>
-                                <p><?= htmlspecialchars(trimText($post['description'], $maxTextLength)) . '...'; ?></p>
+                                <p><?= htmlspecialchars(trimText($post['content'], $maxTextLength)) . '...'; ?></p>
                                 <a class="post-text__more-link" href="#">Читать далее</a>
                             <?php }; ?>
-                        <?php elseif ($post['type'] === 'post-link'): ?>
+                        <?php elseif ($post['type'] === 'Ссылка'): ?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="http://" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
@@ -122,19 +95,19 @@
                                             <h3><?= $postTitle; ?></h3>
                                         </div>
                                     </div>
-                                    <span><?= $postDescription; ?></span>
+                                    <span><?= $postContent; ?></span>
                                 </a>
                             </div>
 
-                        <?php elseif ($post['type'] === 'post-photo'): ?>
+                        <?php elseif ($post['type'] === 'Картинка'): ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?= $postDescription; ?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="img/<?= $postContent; ?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
 
-                        <?php elseif ($post['type'] === 'post-video'): ?>
+                        <?php elseif ($post['type'] === 'Видео'): ?>
                             <div class="post-video__block">
                                 <div class="post-video__preview">
-                                    <?= embed_youtube_cover($postDescription); ?>
+                                    <?= embed_youtube_cover($postContent); ?>
                                     <img src="img/coast-medium.jpg"  alt="Превью к видео" width="360" height="188">
                                 </div>
                                 <a href="post-details.html" class="post-video__play-big button">
@@ -150,7 +123,7 @@
                         <div class="post__author">
                             <a class="post__author-link" href="#" title="Автор">
                                 <div class="post__avatar-wrapper">
-                                    <img class="post__author-avatar" src="img/<?= $post['avatar-url']; ?>" alt="Аватар пользователя <?= $post['username']; ?>">
+                                    <img class="post__author-avatar" src="img/<?= $post['avatar_url']; ?>" alt="Аватар пользователя <?= $post['username']; ?>">
                                 </div>
                                 <div class="post__info">
                                     <b class="post__author-name"><?= $post['username']; ?></b>

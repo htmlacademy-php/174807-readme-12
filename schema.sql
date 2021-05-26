@@ -22,7 +22,7 @@ CREATE TABLE posts
     date            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     title           VARCHAR(255) NOT NULL,
     content         TEXT,
-    user_id         INT NOT NULL,
+    user_id         INT          NOT NULL,
     views           INT,
     content_type_id INT          NOT NULL
 );
