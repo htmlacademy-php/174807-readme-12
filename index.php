@@ -13,9 +13,10 @@ $isAuth = rand(0, 1);
 $userName = 'Павел';
 $maxTextLength = 300;
 
-$sqlContentTypes = "SELECT type, icon FROM readme.content_type";
+$sqlContentTypes = 'SELECT type, icon FROM readme.content_type';
 $resultContentTypes = mysqli_query($link, $sqlContentTypes);
-$sqlPopularPosts = "SELECT
+
+$sqlPopularPosts = 'SELECT
                         p.title,
                         u.login as username,
                         c.type,
@@ -27,18 +28,30 @@ $sqlPopularPosts = "SELECT
                         INNER JOIN readme.users u ON p.user_id = u.id
                         INNER JOIN readme.content_type c ON p.content_type_id = c.id
                     ORDER BY p.views DESC
-                    LIMIT 6;";
+                    LIMIT 6;';
 $resultPopularPosts = mysqli_query($link, $sqlPopularPosts);
+
 $contentTypes = mysqli_fetch_all($resultContentTypes, MYSQLI_ASSOC);
 $popularPosts = mysqli_fetch_all($resultPopularPosts, MYSQLI_ASSOC);
 
-if (!$contentTypes || !$popularPosts) {
+$avaliableContentTypes = [];
+
+foreach ($contentTypes as $contentType):
+    array_push($avaliableContentTypes, $contentType['icon']);
+endforeach;
+
+$selectedFilter = filter_input(INPUT_GET, 'filter', FILTER_SANITIZE_STRING);
+$isExistingContentType = in_array($selectedFilter, $avaliableContentTypes);
+$activeFilter = $isExistingContentType || $selectedFilter === 'all' ? $selectedFilter : null;
+
+if (!$contentTypes || !$popularPosts || !$activeFilter) {
     $error = mysqli_error($link);
     $content = include_template('error.php', ['error' => $error]);
 } else {
     $content = include_template('main.php', [
         'posts' => $popularPosts,
         'categories' => $contentTypes,
+        'activeFilter' => $activeFilter,
         'maxTextLength' => $maxTextLength
     ]);
 }

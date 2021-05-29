@@ -37,16 +37,18 @@
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
+                        <a class="filters__button filters__button--ellipse filters__button--all <?= $activeFilter === 'all' ? 'filters__button--active' : '' ?>"
+                           href="/?filter=all">
                             <span>Все</span>
                         </a>
                     </li>
                     <?php foreach ($categories as $category):
                         $icon = $category['icon'];
                         $type = $category['type'];
+                        $activeCategory = $activeFilter === $icon;
                     ?>
                         <li class="popular__filters-item filters__item">
-                            <a class="filters__button filters__button--<?= $icon;?> button" href="#">
+                            <a class="filters__button filters__button--<?= $icon ?> button <?= $activeCategory ? 'filters__button--active' : '' ?>" href="/?filter=<?= $icon ;?>">
                                 <span class="visually-hidden"><?= $type ;?></span>
                                 <svg class="filters__icon" width="22" height="18">
                                     <use xlink:href="#icon-filter-<?= $icon;?>"></use>
@@ -78,12 +80,12 @@
                                 <cite>Неизвестный Автор</cite>
                             </blockquote>
                         <?php elseif ($post['type'] === 'Текст'): ?>
-                            <?php if (mb_strlen($post['content']) <= $maxTextLength) { ?>
+                            <?php if (mb_strlen($post['content']) <= $maxTextLength): ?>
                                 <p><?= $postContent; ?></p>
-                            <?php } else { ?>
+                            <?php else: ?>
                                 <p><?= htmlspecialchars(trimText($post['content'], $maxTextLength)) . '...'; ?></p>
                                 <a class="post-text__more-link" href="#">Читать далее</a>
-                            <?php }; ?>
+                            <?php endif; ?>
                         <?php elseif ($post['type'] === 'Ссылка'): ?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="http://" title="Перейти по ссылке">

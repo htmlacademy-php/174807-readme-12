@@ -45,17 +45,18 @@ function getDateDifferenceText(string $date): string {
     $weeks = (int)ceil($days / 7);
     $months = (int)ceil($timeDifference->m);
     $result = "Недавно";
+    $agoString = " назад";
 
     if ($months) {
-        $result = "${months} " . get_noun_plural_form($months, 'месяц', 'месяца', 'месяцев') . " назад";
+        $result = "${months} " . get_noun_plural_form($months, 'месяц', 'месяца', 'месяцев') . $agoString;
     } elseif ($days > 7) {
-        $result = "${weeks} " . get_noun_plural_form($weeks, 'неделя', 'недели', 'недель') . " назад";
+        $result = "${weeks} " . get_noun_plural_form($weeks, 'неделя', 'недели', 'недель') . $agoString;
     } elseif ($days) {
-        $result = "${days} " . get_noun_plural_form($days, 'день', 'дня', 'дней') . " назад";
+        $result = "${days} " . get_noun_plural_form($days, 'день', 'дня', 'дней') . $agoString;
     } elseif ($hours) {
-        $result = "${hours} " . get_noun_plural_form($hours, 'час', 'часа', 'часов') . " назад";
+        $result = "${hours} " . get_noun_plural_form($hours, 'час', 'часа', 'часов') . $agoString;
     } elseif ($minutes) {
-        $result = "${minutes} " . get_noun_plural_form($minutes, 'минута', 'минуты', 'минут') . " назад";
+        $result = "${minutes} " . get_noun_plural_form($minutes, 'минута', 'минуты', 'минут') . $agoString;
     }
 
     return $result;
