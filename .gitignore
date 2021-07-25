@@ -12,3 +12,9 @@ uploads/*
 !uploads/.gitkeep
 
 config/db.php
+xml-coverage
+tests
+.phpunit.result.cache
+crap4j.xml
+phpunit.xml
+phpunit.xml.bak

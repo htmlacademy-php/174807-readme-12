@@ -37,18 +37,19 @@
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all <?= $activeFilter === 'all' ? 'filters__button--active' : '' ?>"
-                           href="/?filter=all">
+                        <a class="filters__button filters__button--ellipse filters__button--all <?= $activeFilter === 0 || !$activeFilter ? 'filters__button--active' : '' ?>"
+                           href="/">
                             <span>Все</span>
                         </a>
                     </li>
                     <?php foreach ($categories as $category):
                         $icon = $category['icon'];
                         $type = $category['type'];
-                        $activeCategory = $activeFilter === $icon;
+                        $categoryId = $category['id'];
+                        $activeCategory = $activeFilter === $categoryId;
                     ?>
                         <li class="popular__filters-item filters__item">
-                            <a class="filters__button filters__button--<?= $icon ?> button <?= $activeCategory ? 'filters__button--active' : '' ?>" href="/?filter=<?= $icon ;?>">
+                            <a class="filters__button filters__button--<?= $icon ?> button <?= $activeCategory ? 'filters__button--active' : '' ?>" href="/?filter=<?= $categoryId ;?>">
                                 <span class="visually-hidden"><?= $type ;?></span>
                                 <svg class="filters__icon" width="22" height="18">
                                     <use xlink:href="#icon-filter-<?= $icon;?>"></use>
@@ -69,7 +70,7 @@
 
                 <article class="popular__post post post-<?= $post['icon']; ?>">
                     <header class="post__header">
-                        <h2><a href="#"><?= $postTitle; ?></a></h2>
+                        <h2><a href="/post.php?id=<?=$post['id']?>"><?= $postTitle; ?></a></h2>
                     </header>
                     <div class="post__main">
                         <?php if ($post['type'] === 'Цитата'): ?>

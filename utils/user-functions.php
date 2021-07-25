@@ -61,3 +61,19 @@ function getDateDifferenceText(string $date): string {
 
     return $result;
 }
+
+/**
+ * Вспомогательная функция для проверки полученных данных на наличие ошибок
+ * @param   mixed ...$params  параметры, которые нужно проверить на наличие ошибки
+ *
+ * @return  string            строка с ошибкой или пустая строка, если ошибок нет
+ */
+function getStringParams(...$params): string {
+    foreach ($params as $param) {
+        if (gettype($param) === 'string') {
+            return $param;
+        }
+    }
+
+    return '';
+}

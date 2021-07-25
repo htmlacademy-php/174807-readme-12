@@ -24,8 +24,8 @@ function is_date_valid(string $date): bool
 /**
  * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
  *
- * @param $link mysqli Ресурс соединения
- * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param       $link mysqli Ресурс соединения
+ * @param       $sql  string SQL запрос с плейсхолдерами вместо значений
  * @param array $data Данные для вставки на место плейсхолдеров
  *
  * @return mysqli_stmt Подготовленное выражение
@@ -34,45 +34,42 @@ function db_get_prepare_stmt($link, $sql, $data = [])
 {
     $stmt = mysqli_prepare($link, $sql);
 
-    if ($stmt === false) {
+    if (!$stmt) {
         $errorMsg = 'Не удалось инициализировать подготовленное выражение: ' . mysqli_error($link);
+
         die($errorMsg);
     }
 
-    if ($data) {
-        $types = '';
-        $stmt_data = [];
+    if (!$data) {
+        return $stmt;
+    }
 
-        foreach ($data as $value) {
-            $type = 's';
+    $data_types = [
+        'string' => 's',
+        'integer' => 'i',
+        'double' => 'd',
+    ];
 
-            if (is_int($value)) {
-                $type = 'i';
-            } else {
-                if (is_string($value)) {
-                    $type = 's';
-                } else {
-                    if (is_double($value)) {
-                        $type = 'd';
-                    }
-                }
-            }
+    $types = '';
+    $stmt_data = [];
 
-            if ($type) {
-                $types .= $type;
-                $stmt_data[] = $value;
-            }
+    foreach ($data as $value) {
+        $type = gettype($value);
+
+        if (!isset($data_types[$type])) {
+            throw new Exception('Неправильный тип данных');
         }
 
-        $values = array_merge([$stmt, $types], $stmt_data);
+        $types .= $data_types[$type];
+        $stmt_data[] = $value;
+    }
 
-        $func = 'mysqli_stmt_bind_param';
-        $func(...$values);
+    mysqli_stmt_bind_param($stmt, $types, ...$stmt_data);
 
-        if (mysqli_errno($link) > 0) {
-            $errorMsg = 'Не удалось связать подготовленное выражение с параметрами: ' . mysqli_error($link);
-            die($errorMsg);
-        }
+    if (mysqli_errno($link)) {
+        $error_msg = 'Не удалось связать подготовленное выражение с параметрами: ' . mysqli_error($link);
+
+        die($error_msg);
     }
 
     return $stmt;
@@ -93,10 +90,10 @@ function db_get_prepare_stmt($link, $sql, $data = [])
  *     );
  * Результат: "Я поставил таймер на 5 минут"
  *
- * @param int $number Число, по которому вычисляем форму множественного числа
- * @param string $one Форма единственного числа: яблоко, час, минута
- * @param string $two Форма множественного числа для 2, 3, 4: яблока, часа, минуты
- * @param string $many Форма множественного числа для остальных чисел
+ * @param int    $number Число, по которому вычисляем форму множественного числа
+ * @param string $one    Форма единственного числа: яблоко, час, минута
+ * @param string $two    Форма множественного числа для 2, 3, 4: яблока, часа, минуты
+ * @param string $many   Форма множественного числа для остальных чисел
  *
  * @return string Рассчитанная форма множественнго числа
  */
@@ -152,6 +149,7 @@ function include_template(string $name, array $data = []): string
 
 /**
  * Функция проверяет доступно ли видео по ссылке на youtube
+ *
  * @param string $url ссылка на видео
  *
  * @return string Ошибку если валидация не прошла
@@ -160,7 +158,8 @@ function check_youtube_url($url)
 {
     $id = extract_youtube_id($url);
 
-    set_error_handler(function () {}, E_WARNING);
+    set_error_handler(function () {
+    }, E_WARNING);
     $headers = get_headers('https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v=' . $id);
     restore_error_handler();
 
@@ -179,7 +178,9 @@ function check_youtube_url($url)
 
 /**
  * Возвращает код iframe для вставки youtube видео на страницу
+ *
  * @param string $youtube_url Ссылка на youtube видео
+ *
  * @return string
  */
 function embed_youtube_video($youtube_url)
@@ -197,7 +198,9 @@ function embed_youtube_video($youtube_url)
 
 /**
  * Возвращает img-тег с обложкой видео для вставки на страницу
+ *
  * @param string $youtube_url Ссылка на youtube видео
+ *
  * @return string
  */
 function embed_youtube_cover($youtube_url)
@@ -215,7 +218,9 @@ function embed_youtube_cover($youtube_url)
 
 /**
  * Извлекает из ссылки на youtube видео его уникальный ID
+ *
  * @param string $youtube_url Ссылка на youtube видео
+ *
  * @return array
  */
 function extract_youtube_id($youtube_url)
@@ -240,6 +245,7 @@ function extract_youtube_id($youtube_url)
 
 /**
  * @param int $index
+ *
  * @return false|string
  */
 function generate_random_date(int $index): bool|string
